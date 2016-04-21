@@ -8,6 +8,15 @@ var HelloMessage = React.createClass({
   getInitialState: function () {
     return { nama: 'Roland' };
   },
+  componentDidMount: function () {
+    var $this = this,
+        timeoutID;
+
+    timeoutID = setTimeout(function () {
+      $this.setState({ nama: 'Arief Humala' });
+      clearTimeout(timeoutID);
+    }, 3000);
+  },
   render: function () {
     return React.createElement(
       'h1',
