@@ -9,12 +9,14 @@ var HelloMessage = React.createClass({
     return React.createElement(
       'h1',
       null,
-      'Hello, React!'
+      'Hello, ',
+      this.props.name,
+      '!'
     );
   }
 });
 
-ReactDOM.render(React.createElement(HelloMessage, null), document.getElementById('main'));
+ReactDOM.render(React.createElement(HelloMessage, { name: 'MasRol' }), document.getElementById('main'));
 
 },{"react":165,"react-dom":29}],2:[function(require,module,exports){
 (function (process){
