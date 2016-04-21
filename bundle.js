@@ -16,7 +16,19 @@ var HelloMessage = React.createClass({
   }
 });
 
-ReactDOM.render(React.createElement(HelloMessage, { name: 'MasRol' }), document.getElementById('main'));
+var Header = React.createClass({
+  displayName: 'Header',
+
+  render: function () {
+    return React.createElement(
+      'header',
+      { style: { backgroundColor: '#F00' } },
+      React.createElement(HelloMessage, { name: 'MasRol' })
+    );
+  }
+});
+
+ReactDOM.render(React.createElement(Header, null), document.getElementById('main'));
 
 },{"react":165,"react-dom":29}],2:[function(require,module,exports){
 (function (process){

@@ -9,7 +9,17 @@ var HelloMessage = React.createClass({
   }
 });
 
+var Header = React.createClass({
+  render: function() {
+    return (
+      <header style={{backgroundColor: '#F00'}}>
+        <HelloMessage name="MasRol" />
+      </header>
+    )
+  }
+});
+
 ReactDOM.render(
-  <HelloMessage name="MasRol" />,
+  <Header />,
   document.getElementById('main')
 );
