@@ -21,16 +21,23 @@ var HelloMessage = React.createClass({
   },
   render: function() {
     return (
-      <h1>Hello <a href="#" onClick={this.onClick}>{this.state.nama}</a></h1>
+      <h1>Hello <a href="#" onClick={this.props.onClick}>{this.state.nama}</a></h1>
     );
   }
 });
 
 var Header = React.createClass({
+  getInitialState: function() {
+    return {bc: 'green'};
+  },
+  onClick: function(e) {
+    this.setState({bc:'red'});
+    e.preventDefault();
+  },
   render: function() {
     return (
-      <header style={{backgroundColor: '#F00'}}>
-        <HelloMessage name={this.props.myName} />
+      <header style={{backgroundColor: this.state.bc}}>
+        <HelloMessage onClick={this.onClick}/>
       </header>
     )
   }

@@ -28,7 +28,7 @@ var HelloMessage = React.createClass({
       'Hello ',
       React.createElement(
         'a',
-        { href: '#', onClick: this.onClick },
+        { href: '#', onClick: this.props.onClick },
         this.state.nama
       )
     );
@@ -38,11 +38,18 @@ var HelloMessage = React.createClass({
 var Header = React.createClass({
   displayName: 'Header',
 
+  getInitialState: function () {
+    return { bc: 'green' };
+  },
+  onClick: function (e) {
+    this.setState({ bc: 'red' });
+    e.preventDefault();
+  },
   render: function () {
     return React.createElement(
       'header',
-      { style: { backgroundColor: '#F00' } },
-      React.createElement(HelloMessage, { name: this.props.myName })
+      { style: { backgroundColor: this.state.bc } },
+      React.createElement(HelloMessage, { onClick: this.onClick })
     );
   }
 });
