@@ -5,12 +5,15 @@ var ReactDOM = require('react-dom');
 var HelloMessage = React.createClass({
   displayName: 'HelloMessage',
 
+  getInitialState: function () {
+    return { nama: 'Roland' };
+  },
   render: function () {
     return React.createElement(
       'h1',
       null,
       'Hello, ',
-      this.props.name,
+      this.state.nama,
       '!'
     );
   }
@@ -23,12 +26,12 @@ var Header = React.createClass({
     return React.createElement(
       'header',
       { style: { backgroundColor: '#F00' } },
-      React.createElement(HelloMessage, { name: 'MasRol' })
+      React.createElement(HelloMessage, { name: this.props.myName })
     );
   }
 });
 
-ReactDOM.render(React.createElement(Header, null), document.getElementById('main'));
+ReactDOM.render(React.createElement(Header, { myName: 'MasROl' }), document.getElementById('main'));
 
 },{"react":165,"react-dom":29}],2:[function(require,module,exports){
 (function (process){
