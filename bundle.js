@@ -17,13 +17,20 @@ var HelloMessage = React.createClass({
       clearTimeout(timeoutID);
     }, 3000);
   },
+  onClick: function (e) {
+    alert('Hallo ' + this.state.nama);
+    e.preventDefault();
+  },
   render: function () {
     return React.createElement(
       'h1',
       null,
-      'Hello, ',
-      this.state.nama,
-      '!'
+      'Hello ',
+      React.createElement(
+        'a',
+        { href: '#', onClick: this.onClick },
+        this.state.nama
+      )
     );
   }
 });
