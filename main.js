@@ -1,67 +1,101 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+var React     = require('react');
+var ReactDOM  = require('react-dom');
+var Router    = require('react-router').Router;
+var Route     = require('react-router').Route;
+var Link      = require('react-router').Link;
+var browserHistory      = require('react-router').browserHistory;
 
-var AddTodo       = React.createClass({
-  getInitialState: function() {
-    return {text: ''};
-  },
-  onChange: function(e) {
-    this.setState({text: e.target.value});
-  },
-  onBtnClick: function(e) {
-    this.props.addTodoStr(this.state.text);
-    this.setState({text: ''});
-    e.preventDefault();
-  },
-  componentDidMount: function()
+var App       = React.createClass({
+  /*getInitialState: function() {
+
+  },ponentDidMount: function()
   {
 
-  },
+  },*/
   render: function() {
     return (
       <div>
-        <input onChange={this.onChange} type="text" value={this.state.text} />
-        <button onClick={this.onBtnClick} type="submit">Kirim</button>
+        <h1>My App</h1>
+        <ul>
+          <li><Link to="/login">Login</Link></li>
+          <li><Link to="/users">Users</Link></li>
+          <li><Link to="/users/roland">roland</Link></li>
+          <li><Link to="/home">Home</Link></li>
+        </ul>
+        {this.props.children}
       </div>
     );
   }
 });
 
-var TodoList = React.createClass({
-  getInitialState: function() {
-    return {todos: [
-      {name:"nganu"},
-      {name:"nunga"},
-      {name:"yelaah"}
-    ]};
-  },
-  componentDidMount: function()
+var LoginPage = React.createClass({
+  /*getInitialState: function() {
+
+  },ponentDidMount: function()
   {
-    fetch('todos.json').then(function(response){
-      return response.json();
-    }).then(function(j){
-      this.setState({todos: j});
-    }.bind(this));
-  },
-  addTodoStr: function(s) {
-    var td = this.state.todos;
-    td.push({name:s});
-    this.setState({todos: td});
-  },
+
+  },*/
   render: function() {
-    var todoNodes = this.state.todos.map(function(task, i){
-      return (<li key={i}>{task.name}</li>);
-    });
     return (
-      <div>
-        <ul>{todoNodes}</ul>
-        <AddTodo addTodoStr={this.addTodoStr} />
-      </div>
+      <h2>Login Page</h2>
+    );
+  }
+});
+
+var DashboardPage = React.createClass({
+  /*getInitialState: function() {
+
+  },ponentDidMount: function()
+  {
+
+  },*/
+  render: function() {
+    return (
+      <h2>Dashboard Page</h2>
+    );
+  }
+});
+
+var ProfilePage = React.createClass({
+  /*getInitialState: function() {
+
+  },ponentDidMount: function()
+  {
+
+  },*/
+  render: function() {
+    return (
+      <h2>Profile Page: {this.props.params.userId}</h2>
+    );
+  }
+});
+
+var NotFoundPage = React.createClass({
+  /*getInitialState: function() {
+
+  },ponentDidMount: function()
+  {
+
+  },*/
+  render: function() {
+    return (
+      <h2>404</h2>
     );
   }
 });
 
 ReactDOM.render(
-  <TodoList />,
+  (
+    <Router history={browserHistory}>
+      <Route path="/" component={App}>
+        <Route path="login" component={LoginPage} />
+        <Route path="home" component={DashboardPage} />
+        <Route path="users" component={ProfilePage}>
+          <Route path="/users/:userId" component={ProfilePage} />
+        </Route>
+        <Route path="*" component={NotFoundPage} />
+      </Route>
+    </Router>
+  ),
   document.getElementById('main')
 );
