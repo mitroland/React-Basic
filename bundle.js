@@ -2,6 +2,35 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+var AddTodo = React.createClass({
+  displayName: 'AddTodo',
+
+  getInitialState: function () {
+    return { text: '' };
+  },
+  onChange: function (e) {
+    this.setState({ text: e.target.value });
+  },
+  onBtnClick: function (e) {
+    this.props.addTodoStr(this.state.text);
+    this.setState({ text: '' });
+    e.preventDefault();
+  },
+  componentDidMount: function () {},
+  render: function () {
+    return React.createElement(
+      'div',
+      null,
+      React.createElement('input', { onChange: this.onChange, type: 'text', value: this.state.text }),
+      React.createElement(
+        'button',
+        { onClick: this.onBtnClick, type: 'submit' },
+        'Kirim'
+      )
+    );
+  }
+});
+
 var TodoList = React.createClass({
   displayName: 'TodoList',
 
@@ -15,6 +44,11 @@ var TodoList = React.createClass({
       this.setState({ todos: j });
     }.bind(this));
   },
+  addTodoStr: function (s) {
+    var td = this.state.todos;
+    td.push({ name: s });
+    this.setState({ todos: td });
+  },
   render: function () {
     var todoNodes = this.state.todos.map(function (task, i) {
       return React.createElement(
@@ -24,61 +58,14 @@ var TodoList = React.createClass({
       );
     });
     return React.createElement(
-      'ul',
+      'div',
       null,
-      todoNodes
-    );
-  }
-});
-
-var HelloMessage = React.createClass({
-  displayName: 'HelloMessage',
-
-  getInitialState: function () {
-    return { nama: 'Roland' };
-  },
-  componentDidMount: function () {
-    var $this = this,
-        timeoutID;
-
-    timeoutID = setTimeout(function () {
-      $this.setState({ nama: 'Arief Humala' });
-      clearTimeout(timeoutID);
-    }, 3000);
-  },
-  onClick: function (e) {
-    alert('Hallo ' + this.state.nama);
-    e.preventDefault();
-  },
-  render: function () {
-    return React.createElement(
-      'h1',
-      null,
-      'Hello ',
       React.createElement(
-        'a',
-        { href: '#', onClick: this.props.onClick },
-        this.state.nama
-      )
-    );
-  }
-});
-
-var Header = React.createClass({
-  displayName: 'Header',
-
-  getInitialState: function () {
-    return { bc: 'green' };
-  },
-  onClick: function (e) {
-    this.setState({ bc: this.state.bc == 'red' ? 'green' : 'red' });
-    e.preventDefault();
-  },
-  render: function () {
-    return React.createElement(
-      'header',
-      { style: { backgroundColor: this.state.bc } },
-      React.createElement(HelloMessage, { onClick: this.onClick })
+        'ul',
+        null,
+        todoNodes
+      ),
+      React.createElement(AddTodo, { addTodoStr: this.addTodoStr })
     );
   }
 });

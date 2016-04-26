@@ -1,6 +1,32 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+var AddTodo       = React.createClass({
+  getInitialState: function() {
+    return {text: ''};
+  },
+  onChange: function(e) {
+    this.setState({text: e.target.value});
+  },
+  onBtnClick: function(e) {
+    this.props.addTodoStr(this.state.text);
+    this.setState({text: ''});
+    e.preventDefault();
+  },
+  componentDidMount: function()
+  {
+
+  },
+  render: function() {
+    return (
+      <div>
+        <input onChange={this.onChange} type="text" value={this.state.text} />
+        <button onClick={this.onBtnClick} type="submit">Kirim</button>
+      </div>
+    );
+  }
+});
+
 var TodoList = React.createClass({
   getInitialState: function() {
     return {todos: [
@@ -17,53 +43,21 @@ var TodoList = React.createClass({
       this.setState({todos: j});
     }.bind(this));
   },
+  addTodoStr: function(s) {
+    var td = this.state.todos;
+    td.push({name:s});
+    this.setState({todos: td});
+  },
   render: function() {
     var todoNodes = this.state.todos.map(function(task, i){
       return (<li key={i}>{task.name}</li>);
     });
-    return (<ul>{todoNodes}</ul>);
-  }
-});
-
-var HelloMessage = React.createClass({
-  getInitialState: function() {
-    return {nama: 'Roland'};
-  },
-  componentDidMount: function()
-  {
-    var $this = this,
-        timeoutID;
-
-    timeoutID = setTimeout(function(){
-      $this.setState({nama: 'Arief Humala'});
-      clearTimeout(timeoutID);
-    }, 3000);
-  },
-  onClick: function(e) {
-    alert('Hallo '+this.state.nama);
-    e.preventDefault();
-  },
-  render: function() {
     return (
-      <h1>Hello <a href="#" onClick={this.props.onClick}>{this.state.nama}</a></h1>
+      <div>
+        <ul>{todoNodes}</ul>
+        <AddTodo addTodoStr={this.addTodoStr} />
+      </div>
     );
-  }
-});
-
-var Header = React.createClass({
-  getInitialState: function() {
-    return {bc: 'green'};
-  },
-  onClick: function(e) {
-    this.setState({bc: this.state.bc == 'red' ? 'green' : 'red'});
-    e.preventDefault();
-  },
-  render: function() {
-    return (
-      <header style={{backgroundColor: this.state.bc}}>
-        <HelloMessage onClick={this.onClick}/>
-      </header>
-    )
   }
 });
 
