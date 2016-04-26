@@ -6,9 +6,15 @@ var TodoList = React.createClass({
   displayName: 'TodoList',
 
   getInitialState: function () {
-    return { todos: [{ name: "cukur" }, { name: "sarapan" }, { name: "nulis" }] };
+    return { todos: [{ name: "nganu" }, { name: "nunga" }, { name: "yelaah" }] };
   },
-  componentDidMount: function () {},
+  componentDidMount: function () {
+    fetch('todos.json').then(function (response) {
+      return response.json();
+    }).then(function (j) {
+      this.setState({ todos: j });
+    }.bind(this));
+  },
   render: function () {
     var todoNodes = this.state.todos.map(function (task, i) {
       return React.createElement(
