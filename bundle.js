@@ -2,6 +2,29 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+var TodoList = React.createClass({
+  displayName: 'TodoList',
+
+  getInitialState: function () {
+    return { todos: [{ name: "cukur" }, { name: "sarapan" }, { name: "nulis" }] };
+  },
+  componentDidMount: function () {},
+  render: function () {
+    var todoNodes = this.state.todos.map(function (task, i) {
+      return React.createElement(
+        'li',
+        { key: i },
+        task.name
+      );
+    });
+    return React.createElement(
+      'ul',
+      null,
+      todoNodes
+    );
+  }
+});
+
 var HelloMessage = React.createClass({
   displayName: 'HelloMessage',
 
@@ -42,7 +65,7 @@ var Header = React.createClass({
     return { bc: 'green' };
   },
   onClick: function (e) {
-    this.setState({ bc: 'red' });
+    this.setState({ bc: this.state.bc == 'red' ? 'green' : 'red' });
     e.preventDefault();
   },
   render: function () {
@@ -54,7 +77,7 @@ var Header = React.createClass({
   }
 });
 
-ReactDOM.render(React.createElement(Header, { myName: 'MasROl' }), document.getElementById('main'));
+ReactDOM.render(React.createElement(TodoList, null), document.getElementById('main'));
 
 },{"react":165,"react-dom":29}],2:[function(require,module,exports){
 (function (process){
